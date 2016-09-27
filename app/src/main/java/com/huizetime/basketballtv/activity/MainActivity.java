@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     }
 
+
     private void initData() {
         mPresenter = new MainPresenter(this);
         mPresenter.initData();
