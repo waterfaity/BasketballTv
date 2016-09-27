@@ -91,7 +91,7 @@ public class BTManager {
         if (bTAdapter == null) {
             bTAdapter = BluetoothAdapter.getDefaultAdapter();
             openBT();
-            initReceiver();
+//            initReceiver();
         }
         return btManager;
     }
@@ -474,7 +474,7 @@ public class BTManager {
                 try {
                     if (socket.isConnected()) {
                         len = inputStream.read(buffer);
-                        Log.i(TAG, "run: 读取长度: " + len);
+//                        Log.i(TAG, "run: 读取长度: " + len);
                         if (len != 0) {
                             if (type == SERVER) {
                                 serverConnectListener.onRead(buffer, len);
