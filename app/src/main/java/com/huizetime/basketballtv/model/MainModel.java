@@ -11,4 +11,6 @@ public interface MainModel {
     void close();
 
     void operateData(String json);
+
+    void closeBT();
 }

@@ -87,11 +87,13 @@ public class BTManager {
         return btManager;
     }
 
-    private BTManager initBTAdapter() {
+    public BTManager initBTAdapter() {
         if (bTAdapter == null) {
             bTAdapter = BluetoothAdapter.getDefaultAdapter();
-            openBT();
 //            initReceiver();
+        }
+        if (!bTAdapter.isEnabled()){
+            openBT();
         }
         return btManager;
     }

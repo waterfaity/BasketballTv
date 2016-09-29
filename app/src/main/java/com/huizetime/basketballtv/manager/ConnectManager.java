@@ -124,6 +124,10 @@ public class ConnectManager {
         btManager.writeMsgFromServer(("start-" + JsonUtils.getJson(tvData) + "---end").getBytes());
     }
 
+    public void setServerName(String name) {
+        btManager.getBTAdapter().setName(name);
+    }
+
 
     //用户端监听
     public interface UserConnectListener {

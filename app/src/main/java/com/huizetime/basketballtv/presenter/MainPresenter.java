@@ -1,6 +1,8 @@
 package com.huizetime.basketballtv.presenter;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -89,6 +91,7 @@ public class MainPresenter implements MainPresenterListener {
     //2
     @Override
     public void onSuccess() {
+        time = 0;
         Log.i(TAG, "server: 连接成功");
     }
 
@@ -107,6 +110,14 @@ public class MainPresenter implements MainPresenterListener {
     @Override
     public void onOpenServerError() {
         Log.i(TAG, "server: 服务开启失败");
+        mModel.closeBT();
+        handler.sendEmptyMessageDelayed(0, 5000);
+
+        time++;
+        if (time > 5) {
+            return;
+        }
+        setAsServer();
 
     }
 
@@ -120,7 +131,16 @@ public class MainPresenter implements MainPresenterListener {
             mDataTrans.clear();
             mModel.operateData(json);
         }
-
     }
 
+
+    private int time;
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+           setAsServer();
+        }
+    };
 }

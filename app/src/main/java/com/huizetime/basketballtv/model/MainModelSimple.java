@@ -36,6 +36,7 @@ public class MainModelSimple implements MainModel {
         PermissionUtils.requestPermission(mActivity, PermissionUtils.REQUEST_LOCATION);
         //初始化蓝牙连接管理
         mConnectManager = ConnectManager.getInstance();
+
         path = mActivity.getCacheDir() + File.separator;
     }
 
@@ -115,5 +116,11 @@ public class MainModelSimple implements MainModel {
                 mListener.close();
                 break;
         }
+    }
+
+    @Override
+    public void closeBT() {
+        MyApp.getApp().getBTManager().getBTAdapter().disable();
+        MyApp.getApp().getBTManager().getBTAdapter().enable();
     }
 }
