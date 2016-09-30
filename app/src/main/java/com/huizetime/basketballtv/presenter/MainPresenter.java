@@ -10,6 +10,8 @@ import com.huizetime.basketballtv.activity.MainActivity;
 import com.huizetime.basketballtv.bean.tv.TVEventBean;
 import com.huizetime.basketballtv.bean.tv.TVScoreBean;
 import com.huizetime.basketballtv.bean.tv.TVSignBean;
+import com.huizetime.basketballtv.fragment.LogFragment;
+import com.huizetime.basketballtv.fragment.SignFragment;
 import com.huizetime.basketballtv.manager.BTDataTrans;
 import com.huizetime.basketballtv.manager.TVDataReceiveUtils;
 import com.huizetime.basketballtv.model.MainModel;
@@ -27,6 +29,7 @@ public class MainPresenter implements MainPresenterListener {
     private Activity mActivity;
     private MainModel mModel;
     private BTDataTrans mDataTrans;
+
 
     public MainPresenter(MainActivity activity) {
         mView = activity;
@@ -60,32 +63,32 @@ public class MainPresenter implements MainPresenterListener {
 
     @Override
     public void setALogo(File file) {
-
+        mView.setSign(SignFragment.A_LOGO, null);
     }
 
     @Override
     public void setBLogo(File file) {
-
+        mView.setSign(SignFragment.B_LOGO, null);
     }
 
     @Override
     public void setQRCode(File file) {
-
+        mView.setSign(SignFragment.QR_CODE, null);
     }
 
     @Override
     public void sign(TVSignBean tvSignBean) {
-
+        mView.setSign(SignFragment.SIGN_DATA, tvSignBean);
     }
 
     @Override
     public void initScore(TVScoreBean tvScoreBean) {
-
+        mView.setScore(LogFragment.INIT, tvScoreBean);
     }
 
     @Override
     public void setEventScore(TVEventBean tvScoreEventBean) {
-
+        mView.setScore(LogFragment.EVENT, tvScoreEventBean);
     }
 
     //2
@@ -93,10 +96,12 @@ public class MainPresenter implements MainPresenterListener {
     public void onSuccess() {
         time = 0;
         Log.i(TAG, "server: 连接成功");
+        mView.onConnectSuccess();
     }
 
     @Override
     public void onWaitingConnect() {
+        mView.onWaitingConnect();
         Log.i(TAG, "server: 等待连接中");
     }
 
@@ -104,29 +109,25 @@ public class MainPresenter implements MainPresenterListener {
     public void onDisconnect() {
         Log.i(TAG, "server: 连接断开");
         Log.i(TAG, "server: 重新设置服务器");
+        mView.onDisconnect();
         setAsServer();
     }
 
     @Override
     public void onOpenServerError() {
+        mView.onOpenServerError();
         Log.i(TAG, "server: 服务开启失败");
         mModel.closeBT();
-        handler.sendEmptyMessageDelayed(0, 5000);
-
         time++;
-        if (time > 5) {
+        if (time > 2) {
             return;
         }
-        setAsServer();
-
+        handler.sendEmptyMessageDelayed(0, 5000);
     }
 
     @Override
     public void onRead(byte[] bytes, int len) {
-//        Log.i(TAG, "read: 读取数据");
-
         String json = TVDataReceiveUtils.receive(mDataTrans, bytes, len);
-
         if (!TextUtils.isEmpty(json)) {
             mDataTrans.clear();
             mModel.operateData(json);
@@ -140,7 +141,7 @@ public class MainPresenter implements MainPresenterListener {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-           setAsServer();
+            setAsServer();
         }
     };
 }

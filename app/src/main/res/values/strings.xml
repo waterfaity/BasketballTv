@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">BasketballTv</string>
     <string name="action_settings">Settings</string>
+    <string name="init_equipment">初始化设备中···</string>
+    <string name="init_equipment_error">初始化设备失败</string>
+    <string name="waiting_connect">等待设备连接中···</string>
+    <string name="connected">设备已连接</string>
+    <string name="disconnect">设备连接断开</string>
 </resources>

@@ -10,6 +10,7 @@ import com.huizetime.basketballtv.bean.tv.TVData;
 import com.huizetime.basketballtv.manager.ConnectManager;
 import com.huizetime.basketballtv.presenter.MainPresenterListener;
 import com.huizetime.basketballtv.utils.Base64Utils;
+import com.huizetime.basketballtv.utils.FileUtils;
 import com.huizetime.basketballtv.utils.PermissionUtils;
 
 import java.io.File;
@@ -23,7 +24,6 @@ public class MainModelSimple implements MainModel {
     private Activity mActivity;
     private ConnectManager mConnectManager;
 
-    private String path;
 
     public MainModelSimple(MainPresenterListener listener, MainActivity activity) {
         this.mListener = listener;
@@ -37,7 +37,6 @@ public class MainModelSimple implements MainModel {
         //初始化蓝牙连接管理
         mConnectManager = ConnectManager.getInstance();
 
-        path = mActivity.getCacheDir() + File.separator;
     }
 
     @Override
@@ -95,13 +94,13 @@ public class MainModelSimple implements MainModel {
 
         switch (tvData.getCode()) {
             case TVData.TYPE_A_LOGO:
-                mListener.setALogo(Base64Utils.decodeToFile(img, path + "a_logo.jpg"));
+                mListener.setALogo(Base64Utils.decodeToFile(img, FileUtils.getImgPath(mActivity, FileUtils.A_LOGO)));
                 break;
             case TVData.TYPE_B_LOGO:
-                mListener.setBLogo(Base64Utils.decodeToFile(img, path + "b_logo.jpg"));
+                mListener.setBLogo(Base64Utils.decodeToFile(img, FileUtils.getImgPath(mActivity, FileUtils.B_LOGO)));
                 break;
             case TVData.TYPE_QR_CODE:
-                mListener.setQRCode(Base64Utils.decodeToFile(img, path + "qrcode.jpg"));
+                mListener.setQRCode(Base64Utils.decodeToFile(img, FileUtils.getImgPath(mActivity, FileUtils.QR_CODE)));
                 break;
             case TVData.TYPE_SIGN:
                 mListener.sign(tvData.getTvSignBean());

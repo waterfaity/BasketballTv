@@ -10,6 +10,12 @@ import com.huizetime.basketballtv.utils.JsonUtils;
  * Created by water_fairy on 2016/9/26.
  */
 public class ConnectManager {
+
+    public static final int STATE_CONNECTED = 1;//已连接
+    public static final int STATE_DISCONNECT = 2;//连接断开
+    public static final int STATE_ERROR = 3;//连接失败
+    public static final int STATE_WAITING = 4;//等待连接
+    public static final int STATE_CONNECTING = 5;//连接中
     private static final ConnectManager connectManager = new ConnectManager();
     private BTManager btManager;
     //先设置监听,再设置 用户端/服务器

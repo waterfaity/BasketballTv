@@ -10,6 +10,7 @@ import com.huizetime.basketballtv.manager.BTManager;
 public class MyApp extends Application {
     private static MyApp myApp;
     private BTManager btManager;
+    private int width;
 
     @Override
     public void onCreate() {
@@ -24,8 +25,16 @@ public class MyApp extends Application {
     public BTManager getBTManager() {
 
         if (btManager == null) {
-            btManager=BTManager.getInstance();
+            btManager = BTManager.getInstance();
         }
         return btManager;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 }
